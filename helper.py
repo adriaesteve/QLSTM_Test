@@ -8,8 +8,8 @@ def date_parser(x):
 
 def get_technical_indicators(dataset, target_col):
     # create 7 and 21 daya moving average
-    dataset['ma7'] = dataset[target_col].rolling(window=7).mean()
-    dataset['ma21'] = dataset[target_col].rolling(window=21).mean()
+    dataset['ma30'] = dataset[target_col].rolling(window=30).mean()
+    dataset['ma90'] = dataset[target_col].rolling(window=90).mean()
 
     # create MACD: Provides exponential weighted functions.
     dataset['26ema'] = dataset[target_col].ewm(span=26).mean()
@@ -18,8 +18,8 @@ def get_technical_indicators(dataset, target_col):
 
     # create Bollinger Bands
     dataset['20sd'] = dataset[target_col].rolling(20).std()
-    dataset['upper_band'] = dataset['ma21'] + dataset['20sd'] * 2
-    dataset['lower_band'] = dataset['ma21'] - dataset['20sd'] * 2
+    dataset['upper_band'] = dataset['ma90'] + dataset['20sd'] * 2
+    dataset['lower_band'] = dataset['ma90'] - dataset['20sd'] * 2
 
     # create expoential moving average
     dataset['ema'] = dataset[target_col].ewm(com=0.5).mean()
@@ -40,9 +40,9 @@ def plot_technical_indicators(dataset, last_days):
 
     # Plot first subplot
     plt.subplot(2, 1, 1)
-    plt.plot(dataset['ma7'],label='MA 7', color='g',linestyle='--')
+    plt.plot(dataset['ma30'],label='MA 30', color='g',linestyle='--')
     plt.plot(dataset['Close'],label='Closing Price', color='b')
-    plt.plot(dataset['ma21'],label='MA 21', color='r',linestyle='--')
+    plt.plot(dataset['ma90'],label='MA 90', color='r',linestyle='--')
     plt.plot(dataset['upper_band'],label='Upper Band', color='c')
     plt.plot(dataset['lower_band'],label='Lower Band', color='c')
     plt.fill_between(x_, dataset['lower_band'], dataset['upper_band'], alpha=0.35)
