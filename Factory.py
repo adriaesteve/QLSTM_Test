@@ -80,10 +80,16 @@ class QLSTM(nn.Module):
         self.wires_update = [f"wire_update_{i}" for i in range(self.n_qubits)]
         self.wires_output = [f"wire_output_{i}" for i in range(self.n_qubits)]
 
-        self.dev_forget = qml.device(self.backend, wires=self.wires_forget)
-        self.dev_input = qml.device(self.backend, wires=self.wires_input)
-        self.dev_update = qml.device(self.backend, wires=self.wires_update)
-        self.dev_output = qml.device(self.backend, wires=self.wires_output)
+        #self.dev_forget = qml.device(self.backend, wires=self.wires_forget)
+        #self.dev_input = qml.device(self.backend, wires=self.wires_input)
+        #self.dev_update = qml.device(self.backend, wires=self.wires_update)
+        #self.dev_output = qml.device(self.backend, wires=self.wires_output)
+        
+        #Procesador quantic de Braket
+        self.dev_forget = qml.device("braket.aws.qubit", device_arn="arn:aws:braket:::device/qpu/ionq/ionQdevice", wires=self.wires_forget)
+        self.dev_input = qml.device("braket.aws.qubit", device_arn="arn:aws:braket:::device/qpu/ionq/ionQdevice", wires=self.wires_input)
+        self.dev_update = qml.device("braket.aws.qubit", device_arn="arn:aws:braket:::device/qpu/ionq/ionQdevice", wires=self.wires_update)
+        self.dev_output = qml.device("braket.aws.qubit", device_arn="arn:aws:braket:::device/qpu/ionq/ionQdevice", wires=self.wires_output)
 
         #self.dev_forget = qml.device(self.backend, wires=self.n_qubits)
         #self.dev_input = qml.device(self.backend, wires=self.n_qubits)
